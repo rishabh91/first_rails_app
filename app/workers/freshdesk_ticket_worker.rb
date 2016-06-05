@@ -2,6 +2,9 @@ require 'httparty'
 
 class FreshdeskTicketWorker
 	include Sidekiq::Worker 
+	def initialize(hash)
+		@tickHash=hash
+	end
 	def perform(args=nil)
 		# tickHash will be passed to the worker by the calling method where it will contain the various details to 
 		## create a ticket inside the helpdesk
@@ -13,7 +16,7 @@ class FreshdeskTicketWorker
 		
 		
 		response= HTTParty.post("#{@base_url}/helpdesk/tickets.json",
-				  :body => {tickHash}.to_json,
+				  :body => {@tickHash}.to_json,
 				  :basic_auth => (auth),
 				  :headers => { 'Content-Type' => 'application/json'}
 				  )
@@ -24,6 +27,7 @@ class FreshdeskTicketWorker
 		end
 		FreshdeskTicketWorker.perform_in(1.day,nil)
 	end
+end
 
 
 
