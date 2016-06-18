@@ -12,7 +12,7 @@ class FreshdeskTicketWorker
 					#	:description =>"#{flipkart_prod_url} && #{amazon_url} && #{sanpdeal_url}"
 					#	:subject => "ticket subject",
 					#   :priority => "This accepts integers"(1=> Low, 2=> Mediume ,3 => High, 4 => Urgent)
-						}
+					#	}
 		
 		
 		response= HTTParty.post("#{@base_url}/helpdesk/tickets.json",
